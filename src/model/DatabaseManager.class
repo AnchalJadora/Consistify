@@ -1,0 +1,66 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+package dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class DatabaseManager {
+   private static final String DB_URL = "jdbc:sqlite:consistify.db";
+   private static Connection connection;
+
+   public DatabaseManager() {
+   }
+
+   public static Connection getConnection() throws SQLException {
+      if (connection == null || connection.isClosed()) {
+         connection = DriverManager.getConnection("jdbc:sqlite:consistify.db");
+      }
+
+      return connection;
+   }
+
+   public static void initializeDatabase() {
+      String var0 = "    CREATE TABLE IF NOT EXISTS habits (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        name TEXT NOT NULL,\n        description TEXT,\n        frequency TEXT NOT NULL DEFAULT 'DAILY',\n        created_date TEXT NOT NULL,\n        is_active INTEGER NOT NULL DEFAULT 1\n    );\n";
+      String var1 = "    CREATE TABLE IF NOT EXISTS habit_logs (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        habit_id INTEGER NOT NULL,\n        log_date TEXT NOT NULL,\n        completed INTEGER NOT NULL DEFAULT 0,\n        notes TEXT,\n        FOREIGN KEY (habit_id) REFERENCES habits(id),\n        UNIQUE(habit_id, log_date)\n    );\n";
+
+      try {
+         Statement var2 = getConnection().createStatement();
+
+         try {
+            var2.execute(var0);
+            var2.execute(var1);
+            System.out.println("Database initialized successfully.");
+         } catch (Throwable var6) {
+            if (var2 != null) {
+               try {
+                  var2.close();
+               } catch (Throwable var5) {
+                  var6.addSuppressed(var5);
+               }
+            }
+
+            throw var6;
+         }
+
+         if (var2 != null) {
+            var2.close();
+         }
+      } catch (SQLException var7) {
+         System.err.println("Error initializing database: " + var7.getMessage());
+      }
+
+   }
+
+   public static void closeConnection() {
+      try {
+         if (connection != null && !connection.isClosed()) {
+            connection.close();
+         }
+      } catch (SQLException var1) {
+         System.err.println("Error closing connection: " + var1.getMessage());
+      }
+
+   }
+}

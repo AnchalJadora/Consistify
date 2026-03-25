@@ -8,7 +8,7 @@ import java.awt.*;
 public class MainFrame extends JFrame {
 
     public MainFrame() {
-        setTitle("Consistify – Habit Tracker");
+        setTitle("Consistify - Habit Tracker");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);

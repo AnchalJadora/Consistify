@@ -6,10 +6,11 @@ public class Habit {
     private int id;
     private String name;
     private String description;
-    private String frequency; // DAILY, WEEKLY
+    private String frequency;              
     private LocalDate createdDate;
     private boolean isActive;
 
+    //Loading an EXISTING habit
     public Habit(int id, String name, String description, String frequency, LocalDate createdDate, boolean isActive) {
         this.id = id;
         this.name = name;
@@ -18,7 +19,7 @@ public class Habit {
         this.createdDate = createdDate;
         this.isActive = isActive;
     }
-
+    //Creating a NEW habit
     public Habit(String name, String description, String frequency) {
         this.name = name;
         this.description = description;

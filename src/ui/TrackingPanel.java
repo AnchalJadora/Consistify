@@ -27,7 +27,7 @@ public class TrackingPanel extends JPanel {
         scroll.setBorder(BorderFactory.createTitledBorder("Today's Checklist"));
         add(scroll, BorderLayout.CENTER);
 
-        JButton refreshBtn = new JButton("🔄 Refresh List");
+        JButton refreshBtn = new JButton(" Refresh List");
         styleButton(refreshBtn, new Color(70, 130, 180));
         refreshBtn.addActionListener(e -> loadTrackingCards());
         JPanel south = new JPanel();
@@ -42,7 +42,7 @@ public class TrackingPanel extends JPanel {
         List<Habit> habits = habitService.getAllHabits();
 
         if (habits.isEmpty()) {
-            JLabel empty = new JLabel("No habits yet. Add some from the 'My Habits' tab! 🌱", SwingConstants.CENTER);
+            JLabel empty = new JLabel("No habits yet. Add some from the 'My Habits' tab! ", SwingConstants.CENTER);
             empty.setFont(new Font("Segoe UI", Font.ITALIC, 14));
             habitsContainer.add(empty);
         }
@@ -67,10 +67,10 @@ public class TrackingPanel extends JPanel {
         card.setBackground(doneToday ? new Color(240, 255, 240) : Color.WHITE);
         card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
 
-        JLabel nameLabel = new JLabel((doneToday ? "✅ " : "⬜ ") + habit.getName());
+        JLabel nameLabel = new JLabel(habit.getName());
         nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
 
-        JLabel streakLabel = new JLabel("🔥 Streak: " + streak + " day(s)");
+        JLabel streakLabel = new JLabel(" Streak: " + streak + " day(s)");
         streakLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         streakLabel.setForeground(new Color(200, 80, 20));
 
@@ -79,7 +79,7 @@ public class TrackingPanel extends JPanel {
         left.add(nameLabel);
         left.add(streakLabel);
 
-        JButton markBtn = new JButton(doneToday ? "✓ Done" : "Mark Done");
+        JButton markBtn = new JButton(doneToday ? " Done" : "Mark Done");
         markBtn.setEnabled(!doneToday);
         styleButton(markBtn, doneToday ? Color.GRAY : new Color(46, 139, 87));
         markBtn.addActionListener(e -> {
@@ -95,7 +95,7 @@ public class TrackingPanel extends JPanel {
 
     private void showCelebration(String habitName) {
         JOptionPane.showMessageDialog(this,
-                "🎉 Great job! You completed:\n\"" + habitName + "\"\nKeep up the streak!",
+                " Great job! You completed:\n\"" + habitName + "\"\nKeep up the streak!",
                 "Habit Completed!", JOptionPane.INFORMATION_MESSAGE);
     }
 

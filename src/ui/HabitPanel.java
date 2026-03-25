@@ -38,9 +38,9 @@ public class HabitPanel extends JPanel {
         // Buttons
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
 
-        JButton addBtn = new JButton("➕ Add Habit");
-        JButton deleteBtn = new JButton("🗑 Delete");
-        JButton refreshBtn = new JButton("🔄 Refresh");
+        JButton addBtn = new JButton("Add Habit");
+        JButton deleteBtn = new JButton("Delete");
+        JButton refreshBtn = new JButton("Refresh");
 
         styleButton(addBtn, new Color(46, 139, 87));
         styleButton(deleteBtn, new Color(178, 34, 34));
@@ -84,7 +84,7 @@ public class HabitPanel extends JPanel {
             }
             habitService.createHabit(name, descField.getText().trim(), (String) freqBox.getSelectedItem());
             loadHabits();
-            JOptionPane.showMessageDialog(this, "Habit \"" + name + "\" added! 🎯", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Habit \"" + name + "\" added! ", "Success", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -119,7 +119,7 @@ public class HabitPanel extends JPanel {
                 int index, boolean isSelected, boolean hasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
             if (value instanceof Habit h) {
-                setText("📌 " + h.getName() + "  [" + h.getFrequency() + "]"
+                setText( h.getName() + "  [" + h.getFrequency() + "]"
                         + (h.getDescription().isEmpty() ? "" : " — " + h.getDescription()));
             }
             return this;

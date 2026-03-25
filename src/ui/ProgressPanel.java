@@ -33,7 +33,7 @@ public class ProgressPanel extends JPanel {
         loadHabits();
         topPanel.add(habitCombo);
 
-        JButton showBtn = new JButton("📈 Show Progress");
+        JButton showBtn = new JButton(" Show Progress");
         styleButton(showBtn, new Color(70, 130, 180));
         showBtn.addActionListener(e -> showProgress());
         topPanel.add(showBtn);
@@ -78,7 +78,7 @@ public class ProgressPanel extends JPanel {
                 LocalDate.now().minusDays(29), LocalDate.now());
 
         statsLabel.setText(String.format(
-            "🔥 Current Streak: %d days   |   🏆 Longest Streak: %d days   |   📅 30-Day Rate: %.1f%%",
+            " Current Streak: %d days   |    Longest Streak: %d days   |   30-Day Rate: %.1f%%",
             currentStreak, longestStreak, rate));
 
         chartPanel.repaint();

@@ -10,8 +10,10 @@ import java.util.List;
 
 public class HabitDAO {
 
-    // ─── Habit CRUD ───────────────────────────────────────────────
+    //Habit CRUD 
 
+
+    //Saves new habit to database
     public int addHabit(Habit habit) {
         String sql = "INSERT INTO habits (name, description, frequency, created_date, is_active) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -29,6 +31,8 @@ public class HabitDAO {
         return -1;
     }
 
+
+    //Fetches all habits where is_active = 1
     public List<Habit> getAllActiveHabits() {
         List<Habit> habits = new ArrayList<>();
         String sql = "SELECT * FROM habits WHERE is_active = 1 ORDER BY name";
@@ -43,6 +47,8 @@ public class HabitDAO {
         return habits;
     }
 
+
+    //Sets is_active = 0 (soft delete)
     public void deleteHabit(int habitId) {
         String sql = "UPDATE habits SET is_active = 0 WHERE id = ?";
         try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(sql)) {
@@ -53,8 +59,10 @@ public class HabitDAO {
         }
     }
 
-    // ─── Log CRUD ─────────────────────────────────────────────────
+    // Log CRUD 
 
+
+    //Saves today's completion record in habit_logs table
     public void logHabit(int habitId, LocalDate date, boolean completed, String notes) {
         String sql = "INSERT INTO habit_logs (habit_id, log_date, completed, notes) VALUES (?, ?, ?, ?) " +
                      "ON CONFLICT(habit_id, log_date) DO UPDATE SET completed = excluded.completed, notes = excluded.notes";
@@ -69,6 +77,8 @@ public class HabitDAO {
         }
     }
 
+
+    //Fetches all daily logs for a specific habit
     public List<HabitLog> getLogsForHabit(int habitId) {
         List<HabitLog> logs = new ArrayList<>();
         String sql = "SELECT * FROM habit_logs WHERE habit_id = ? ORDER BY log_date DESC";
@@ -84,6 +94,8 @@ public class HabitDAO {
         return logs;
     }
 
+
+    //When 30 day completion rate is calculated
     public List<HabitLog> getLogsForDateRange(int habitId, LocalDate start, LocalDate end) {
         List<HabitLog> logs = new ArrayList<>();
         String sql = "SELECT * FROM habit_logs WHERE habit_id = ? AND log_date BETWEEN ? AND ? ORDER BY log_date";
@@ -101,6 +113,8 @@ public class HabitDAO {
         return logs;
     }
 
+
+    //Checks if habit already marked done today
     public boolean isCompletedToday(int habitId) {
         String sql = "SELECT completed FROM habit_logs WHERE habit_id = ? AND log_date = ?";
         try (PreparedStatement pstmt = DatabaseManager.getConnection().prepareStatement(sql)) {
@@ -114,7 +128,7 @@ public class HabitDAO {
         return false;
     }
 
-    // ─── Helpers ──────────────────────────────────────────────────
+    // Helpers 
 
     private Habit mapHabit(ResultSet rs) throws SQLException {
         return new Habit(
