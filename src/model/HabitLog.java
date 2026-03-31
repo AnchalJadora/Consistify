@@ -1,3 +1,5 @@
+//defines what a single day's completion looks like, which habit was done, on which date.
+
 package model;
 
 import java.time.LocalDate;
@@ -9,13 +11,14 @@ public class HabitLog {
     private boolean completed;
     private String notes;
 
+    //creating new id, when user creates a new log
     public HabitLog(int habitId, LocalDate logDate, boolean completed, String notes) {
         this.habitId = habitId;
         this.logDate = logDate;
         this.completed = completed;
         this.notes = notes;
     }
-
+    //existing id, loading from db, id is known
     public HabitLog(int id, int habitId, LocalDate logDate, boolean completed, String notes) {
         this.id = id;
         this.habitId = habitId;

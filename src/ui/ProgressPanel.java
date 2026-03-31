@@ -6,7 +6,6 @@ import service.HabitService;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.time.LocalDate;
 import java.util.List;
 
 public class ProgressPanel extends JPanel {
@@ -15,12 +14,14 @@ public class ProgressPanel extends JPanel {
     private JComboBox<Habit> habitCombo;
     private JPanel chartPanel;
     private JLabel statsLabel;
+    private int[] weeklyData = new int[7];
+    private String selectedHabitName = "";
 
     public ProgressPanel() {
         setLayout(new BorderLayout(10, 10));
         setBorder(new EmptyBorder(15, 15, 15, 15));
 
-        JLabel title = new JLabel("Progress & Analytics", SwingConstants.CENTER);
+        JLabel title = new JLabel("Progress and Analytics", SwingConstants.CENTER);
         title.setFont(new Font("Segoe UI", Font.BOLD, 20));
         add(title, BorderLayout.NORTH);
 
@@ -33,7 +34,7 @@ public class ProgressPanel extends JPanel {
         loadHabits();
         topPanel.add(habitCombo);
 
-        JButton showBtn = new JButton(" Show Progress");
+        JButton showBtn = new JButton("Show Progress");
         styleButton(showBtn, new Color(70, 130, 180));
         showBtn.addActionListener(e -> showProgress());
         topPanel.add(showBtn);
@@ -62,9 +63,6 @@ public class ProgressPanel extends JPanel {
         add(center, BorderLayout.CENTER);
     }
 
-    private int[] weeklyData = new int[7];
-    private String selectedHabitName = "";
-
     private void showProgress() {
         Habit habit = (Habit) habitCombo.getSelectedItem();
         if (habit == null) return;
@@ -74,12 +72,10 @@ public class ProgressPanel extends JPanel {
 
         int currentStreak = habitService.getCurrentStreak(habit.getId());
         int longestStreak = habitService.getLongestStreak(habit.getId());
-        double rate = habitService.getCompletionRate(habit.getId(),
-                LocalDate.now().minusDays(29), LocalDate.now());
 
         statsLabel.setText(String.format(
-            " Current Streak: %d days   |    Longest Streak: %d days   |   30-Day Rate: %.1f%%",
-            currentStreak, longestStreak, rate));
+            "Current Streak: %d days   |   Longest Streak: %d days",
+            currentStreak, longestStreak));
 
         chartPanel.repaint();
     }
@@ -98,7 +94,7 @@ public class ProgressPanel extends JPanel {
         // Title
         g2.setColor(Color.DARK_GRAY);
         g2.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        g2.drawString("Last 7 Days – " + selectedHabitName, 20, 25);
+        g2.drawString("Last 7 Days - " + selectedHabitName, 20, 25);
 
         // Y-axis label
         g2.setFont(new Font("Segoe UI", Font.PLAIN, 11));
@@ -118,7 +114,7 @@ public class ProgressPanel extends JPanel {
 
             g2.setColor(Color.DARK_GRAY);
             g2.setFont(new Font("Segoe UI", Font.BOLD, 11));
-            g2.drawString(weeklyData[i] == 1 ? "✓" : "✗", x + barW / 2 - 5, baseY - barH - 5);
+            g2.drawString(weeklyData[i] == 1 ? "Done" : "Miss", x + barW / 2 - 5, baseY - barH - 5);
 
             g2.setFont(new Font("Segoe UI", Font.PLAIN, 10));
             g2.drawString(days[i], x + 2, baseY + 15);

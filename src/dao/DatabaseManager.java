@@ -1,9 +1,13 @@
+//Creates tables (habits and habit_logs) when the app starts for the first time
+
+
 package dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+//java built in sql tools
+import java.sql.Connection;                 //connects to database
+import java.sql.DriverManager;              //manages the database
+import java.sql.SQLException;               //catch & handles exception 
+import java.sql.Statement;                  //to write and execute sql queries
 
 public class DatabaseManager {
     private static final String DB_URL = "jdbc:sqlite:consistify.db";
@@ -12,10 +16,13 @@ public class DatabaseManager {
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             connection = DriverManager.getConnection(DB_URL);
+            //no connection or the previous connection was closed, make a new one
         }
         return connection;
     }
 
+
+    //method that runs once at startup to set up the database tables
     public static void initializeDatabase() {
         String createHabitsTable = """
             CREATE TABLE IF NOT EXISTS habits (

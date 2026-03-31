@@ -28,11 +28,10 @@ public class StreakCalculator {
         return streak;
     }
 
+
     public int getLongestStreak(int habitId) {
         List<HabitLog> logs = habitDAO.getLogsForHabit(habitId);
         if (logs.isEmpty()) return 0;
-
-        // Sort ascending
         logs.sort((a, b) -> a.getLogDate().compareTo(b.getLogDate()));
 
         int longest = 0, current = 0;

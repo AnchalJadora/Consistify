@@ -1,3 +1,6 @@
+//this file does not do any real work itself
+//it just receives requests from the UI and passes them to either HabitDAO or StreakCalculator to handle
+
 package service;
 
 import dao.HabitDAO;
@@ -28,7 +31,7 @@ public class HabitService {
     }
 
     public void markHabit(int habitId, boolean completed, String notes) {
-        habitDAO.logHabit(habitId, LocalDate.now(), completed, notes);
+        habitDAO.logHabit(habitId, LocalDate.now(), completed);
     }
 
     public boolean isCompletedToday(int habitId) {
