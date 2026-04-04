@@ -17,17 +17,26 @@ public class StreakCalculator {
         int streak = 0;
         LocalDate checkDate = LocalDate.now();
 
+        // FIX: If today has no completed log yet, start checking from yesterday.
+        // This gives a grace period — the streak doesn't break just because
+        // the user hasn't marked today's habit yet.
+        boolean todayLogged = logs.stream()
+            .anyMatch(l -> l.getLogDate().isEqual(LocalDate.now()) && l.isCompleted());
+
+        if (!todayLogged) {
+            checkDate = checkDate.minusDays(1);
+        }
+
         for (HabitLog log : logs) {
             if (log.getLogDate().isEqual(checkDate) && log.isCompleted()) {
                 streak++;
                 checkDate = checkDate.minusDays(1);
             } else if (log.getLogDate().isBefore(checkDate)) {
-                break; // Gap found
+                break; // Gap found, streak ends
             }
         }
         return streak;
     }
-
 
     public int getLongestStreak(int habitId) {
         List<HabitLog> logs = habitDAO.getLogsForHabit(habitId);
@@ -58,7 +67,7 @@ public class StreakCalculator {
     }
 
     public int[] getWeeklySummary(int habitId) {
-        // Returns count of completions per day for last 7 days (index 0 = 6 days ago, 6 = today)
+        // Returns completions per day for last 7 days (index 0 = 6 days ago, 6 = today)
         int[] summary = new int[7];
         LocalDate today = LocalDate.now();
         List<HabitLog> logs = habitDAO.getLogsForDateRange(habitId, today.minusDays(6), today);
