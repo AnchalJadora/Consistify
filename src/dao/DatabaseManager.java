@@ -1,5 +1,4 @@
-//Creates tables (habits and habit_logs) when the app starts for the first time
-
+//responsible for connecting to database + creating tables
 
 package dao;
 
@@ -10,7 +9,7 @@ import java.sql.SQLException;               //catch & handles exception
 import java.sql.Statement;                  //to write and execute sql queries
 
 public class DatabaseManager {
-    private static final String DB_URL = "jdbc:sqlite:consistify.db";
+    private static final String DB_URL = "jdbc:sqlite:consistify.db";           //database url
     private static Connection connection;
 
     public static Connection getConnection() throws SQLException {
@@ -22,13 +21,13 @@ public class DatabaseManager {
     }
 
 
-    //method that runs once at startup to set up the database tables
+    //creates database tables only if it doesnt exist
     public static void initializeDatabase() {
         String createHabitsTable = """
             CREATE TABLE IF NOT EXISTS habits (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
-                description TEXT,
+                description TEXT,                                       //description is optional
                 frequency TEXT NOT NULL DEFAULT 'DAILY',
                 created_date TEXT NOT NULL,
                 is_active INTEGER NOT NULL DEFAULT 1

@@ -1,4 +1,5 @@
-//defines what a single day's completion looks like, which habit was done, on which date.
+
+//This represents one day’s record of a habit
 
 package model;
 

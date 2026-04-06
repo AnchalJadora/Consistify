@@ -2,16 +2,16 @@ package ui;
 
 import dao.DatabaseManager;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.*;       //swing components like JFrame JTabbedPane
+import java.awt.*;          //font layout
 
 public class MainFrame extends JFrame {
 
-    public MainFrame() {
+    public MainFrame() {                        //constructor
         setTitle("Consistify - Habit Tracker");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setLocationRelativeTo(null);
+        
 
         // Apply theme
         try {

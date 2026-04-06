@@ -49,5 +49,5 @@ public class Habit {
     public void setActive(boolean active) { isActive = active; }
 
     @Override
-    public String toString() { return name; }  //how object will be displayed in JList
+    public String toString() { return name; }  //how object will be displayed in JList (ui part)
 }

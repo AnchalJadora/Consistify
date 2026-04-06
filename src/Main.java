@@ -15,10 +15,7 @@ public class Main {
         SwingUtilities.invokeLater(MainFrame::new);
     }
 }
- 
-//Compile (from inside src/ folder):
-//javac -encoding UTF-8 -cp "../lib/sqlite-jdbc-3.47.1.0.jar" -sourcepath . Main.java
- 
-//Run (from inside src/ folder):
-//java -cp ".;../lib/sqlite-jdbc-3.47.1.0.jar" Main
- 
+/* 
+javac -encoding UTF-8 -cp "../lib/sqlite-jdbc-3.47.1.0.jar" -sourcepath . Main.java
+ java -cp ".;../lib/sqlite-jdbc-3.47.1.0.jar" Main
+*/

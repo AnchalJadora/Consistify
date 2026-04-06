@@ -6,8 +6,11 @@ import model.HabitLog;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+
+
 import java.util.List;
 
 public class HabitService {
@@ -58,16 +61,12 @@ public class HabitService {
         return habitDAO.getLogsForHabit(habitId);
     }
 
-    /**
-     * For DAILY habits: returns one slot per day (1 = done, 0 = missed).
-     * For WEEKLY habits: returns one slot per week (1 = done that week, 0 = missed).
-     * Labels are set via the companion method getFullHistoryLabels().
-     */
+    
     public int[] getFullHistory(int habitId, LocalDate startDate, LocalDate endDate, String frequency) {
         List<HabitLog> logs = habitDAO.getLogsForDateRange(habitId, startDate, endDate);
 
         if ("WEEKLY".equalsIgnoreCase(frequency)) {
-            // Build week slots from start of the week containing startDate → endDate
+            
             LocalDate weekStart = startDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
             LocalDate weekEnd   = endDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
             int totalWeeks = (int) ChronoUnit.WEEKS.between(weekStart, weekEnd) + 1;
@@ -76,19 +75,19 @@ public class HabitService {
 
             for (HabitLog log : logs) {
                 if (log.isCompleted()) {
-                    // Which week slot does this log fall into?
+                    
                     LocalDate logWeekStart = log.getLogDate()
                             .with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
                     int idx = (int) ChronoUnit.WEEKS.between(weekStart, logWeekStart);
                     if (idx >= 0 && idx < totalWeeks) {
-                        result[idx] = 1; // mark the whole week as done
+                        result[idx] = 1;                     // mark the whole week as done
                     }
                 }
             }
             return result;
 
         } else {
-            // DAILY: one slot per day
+            
             int totalDays = (int) (endDate.toEpochDay() - startDate.toEpochDay()) + 1;
             int[] result = new int[totalDays];
             for (HabitLog log : logs) {
@@ -100,12 +99,7 @@ public class HabitService {
             return result;
         }
     }
-
-    /**
-     * Returns the labels array that matches getFullHistory() output.
-     * DAILY  → "MMM d" per day
-     * WEEKLY → "MMM d" of each Monday (week start)
-     */
+    //Calculate number of weeks or labels
     public String[] getFullHistoryLabels(LocalDate startDate, LocalDate endDate, String frequency) {
         java.time.format.DateTimeFormatter fmt =
                 java.time.format.DateTimeFormatter.ofPattern("MMM d");
@@ -129,11 +123,7 @@ public class HabitService {
         }
     }
 
-    /**
-     * Completion rate aware of frequency:
-     * DAILY  → completedDays / totalDays
-     * WEEKLY → completedWeeks / totalWeeks
-     */
+    
     public double getCompletionRateSmart(int habitId, LocalDate startDate, LocalDate endDate, String frequency) {
         int[] history = getFullHistory(habitId, startDate, endDate, frequency);
         if (history.length == 0) return 0.0;
@@ -142,7 +132,7 @@ public class HabitService {
         return (double) done / history.length * 100.0;
     }
 
-    /** Convenience: total slots (days or weeks) for stats display */
+    
     public int getTotalSlots(LocalDate startDate, LocalDate endDate, String frequency) {
       
         if ("WEEKLY".equalsIgnoreCase(frequency)) {
