@@ -6,8 +6,8 @@ package model;
 import java.time.LocalDate;
 
 public class HabitLog {
-    private int id;
-    private int habitId;
+    private int id;                     //unique log ID
+    private int habitId;                //ID belongs to habit 
     private LocalDate logDate;
     private boolean completed;
     private String notes;

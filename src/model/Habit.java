@@ -4,7 +4,7 @@ Whenever a user creates a habit, an object of this class is made to hold all the
 
 package model;
 
-import java.time.LocalDate;   //built-in LocalDate class, store dates like 2024-01-15
+import java.time.LocalDate;   //format 2024-01-15
 
 public class Habit {
     private int id;
@@ -12,10 +12,9 @@ public class Habit {
     private String description;
     private String frequency;              
     private LocalDate createdDate;
-    private boolean isActive;
+    private boolean isActive;           //true = active, false = soft delete
 
     //Loading an EXISTING habit
-    //This is the constructor your HabitDAO will use when reading rows from the database.
     public Habit(int id, String name, String description, String frequency, LocalDate createdDate, boolean isActive) {
         this.id = id;
         this.name = name;
@@ -26,7 +25,6 @@ public class Habit {
     }
 
     //Creating a NEW habit
-    //The id is left as 0 for now and SQLite will assign the real one when it gets saved.
     public Habit(String name, String description, String frequency) {
         this.name = name;
         this.description = description;
@@ -49,5 +47,5 @@ public class Habit {
     public void setActive(boolean active) { isActive = active; }
 
     @Override
-    public String toString() { return name; }  //how object will be displayed in JList (ui part)
+    public String toString() { return name; }               //convert a object into readable strign format
 }

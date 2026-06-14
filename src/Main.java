@@ -17,5 +17,5 @@ public class Main {
 }
 /* 
 javac -encoding UTF-8 -cp "../lib/sqlite-jdbc-3.47.1.0.jar" -sourcepath . Main.java
- java -cp ".;../lib/sqlite-jdbc-3.47.1.0.jar" Main
+java -cp ".;../lib/sqlite-jdbc-3.47.1.0.jar" Main
 */

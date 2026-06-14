@@ -2,8 +2,8 @@ package ui;
 
 import dao.DatabaseManager;
 
-import javax.swing.*;       //swing components like JFrame JTabbedPane
-import java.awt.*;          //font layout
+import javax.swing.*;       //swing components like JFrame JButton
+import java.awt.*;          //font and color
 
 public class MainFrame extends JFrame {
 
@@ -18,7 +18,7 @@ public class MainFrame extends JFrame {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception ignored) {}
 
-        // Tabbed pane
+        
         JTabbedPane tabs = new JTabbedPane();
         tabs.setFont(new Font("Segoe UI", Font.BOLD, 14));
 

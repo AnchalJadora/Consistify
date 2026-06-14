@@ -16,8 +16,6 @@ public class StreakCalculator {
 
         int streak = 0;
         LocalDate checkDate = LocalDate.now();
-
-        
         boolean todayLogged = logs.stream()
             .anyMatch(l -> l.getLogDate().isEqual(LocalDate.now()) && l.isCompleted());
 
@@ -35,7 +33,8 @@ public class StreakCalculator {
         }
         return streak;
     }
-
+    
+    //sort logs in chronological order (old → new)
     public int getLongestStreak(int habitId) {
         List<HabitLog> logs = habitDAO.getLogsForHabit(habitId);
         if (logs.isEmpty()) return 0;

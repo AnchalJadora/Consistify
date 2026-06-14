@@ -37,7 +37,7 @@ public class ProgressPanel extends JPanel {
         setBorder(new EmptyBorder(15, 15, 15, 15));
         setBackground(new Color(245, 247, 250));
 
-        // ── NORTH ───────────────────────────────────────────────
+        // NORTH 
         JPanel northPanel = new JPanel(new BorderLayout(5, 5));
         northPanel.setBackground(new Color(245, 247, 250));
 
@@ -70,7 +70,7 @@ public class ProgressPanel extends JPanel {
         northPanel.add(topPanel, BorderLayout.SOUTH);
         add(northPanel, BorderLayout.NORTH);
 
-        // ── CENTER ──────────────────────────────────────────────
+        //CENTER 
         JPanel center = new JPanel(new BorderLayout(10, 10));
         center.setBackground(new Color(245, 247, 250));
 
@@ -86,7 +86,6 @@ public class ProgressPanel extends JPanel {
         statsPanel.add(statsLabel2);
         center.add(statsPanel, BorderLayout.NORTH);
 
-        // CardLayout — swaps table and chart
         cardLayout = new CardLayout();
         contentArea = new JPanel(cardLayout);
         contentArea.setBackground(new Color(245, 247, 250));
@@ -114,7 +113,7 @@ public class ProgressPanel extends JPanel {
         cardLayout.show(contentArea, CARD_TABLE);
     }
 
-    // ── SHOW HABIT CHART ─────────────────────────────────────────
+    // SHOW HABIT CHART 
     private void showProgress() {
         Habit habit = (Habit) habitCombo.getSelectedItem();
         if (habit == null) return;
@@ -160,7 +159,7 @@ public class ProgressPanel extends JPanel {
         chartPanel.repaint();
     }
 
-    // ── SHOW SUMMARY TABLE ───────────────────────────────────────
+    // SHOW SUMMARY TABLE 
     private void showSummaryTable() {
         statsLabel.setText(" ");
         statsLabel2.setText(" ");
@@ -168,7 +167,7 @@ public class ProgressPanel extends JPanel {
         cardLayout.show(contentArea, CARD_TABLE);
     }
 
-    // ── BUILD TABLE ──────────────────────────────────────────────
+    //  BUILD TABLE 
     private JTable buildSummaryTable() {
         String[] columns = {"Habit", "Frequency", "Login Date", "Total Slots", "Done", "Missed", "Completion %"};
         DefaultTableModel model = new DefaultTableModel(columns, 0) {
@@ -358,7 +357,7 @@ public class ProgressPanel extends JPanel {
         }
     }
 
-    // ── HELPERS ──────────────────────────────────────────────────
+    //  HELPERS 
     private void loadHabits() {
         habitCombo.removeAllItems();
         habitService.getAllHabits().forEach(habitCombo::addItem);
